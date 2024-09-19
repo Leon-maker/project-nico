@@ -1,0 +1,52 @@
+[
+    {
+        "title": "Next.js Documentation",
+        "description": "Documentation officielle de Next.js pour apprendre et comprendre les fonctionnalités de ce framework.",
+        "link": "https://nextjs.org/docs"
+    },
+    {
+        "title": "React Tutorial",
+        "description": "Guide interactif pour apprendre à utiliser React, la bibliothèque front-end utilisée par Next.js.",
+        "link": "https://reactjs.org/tutorial/tutorial.html"
+    },
+    {
+        "title": "GitHub Repository",
+        "description": "Dépôt GitHub contenant le code source d'un projet Next.js.",
+        "link": "https://github.com/vercel/next.js"
+    },
+    {
+        "title": "JavaScript Info",
+        "description": "Un site pour tout apprendre sur le langage JavaScript, de la base à des concepts avancés.",
+        "link": "https://javascript.info/"
+    },
+    {
+        "title": "CSS Tricks",
+        "description": "Une collection de trucs et astuces pour maîtriser le CSS et les styles dans les projets web.",
+        "link": "https://css-tricks.com/"
+    },
+    {
+        "title": "MDN Web Docs",
+        "description": "Documentation web de Mozilla avec des tutoriels et des références pour le développement web.",
+        "link": "https://developer.mozilla.org/en-US/"
+    },
+    {
+        "title": "Frontend Mentor",
+        "description": "Plateforme pour s'entraîner au développement front-end avec des challenges de design.",
+        "link": "https://www.frontendmentor.io/"
+    },
+    {
+        "title": "Stack Overflow",
+        "description": "Communauté en ligne pour poser des questions et trouver des réponses sur le développement logiciel.",
+        "link": "https://stackoverflow.com/"
+    },
+    {
+        "title": "Tailwind CSS",
+        "description": "Documentation officielle de Tailwind CSS, un framework de style utilitaire.",
+        "link": "https://tailwindcss.com/docs"
+    },
+    {
+        "title": "Vercel",
+        "description": "Plateforme pour déployer des applications Next.js avec une intégration facile.",
+        "link": "https://vercel.com/"
+    }
+]
