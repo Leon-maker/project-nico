@@ -46,6 +46,8 @@
 .title {
     font-size: 2rem;
     margin-bottom: 20px;
+    align-items: start;
+    display: flex;
 }
 
 .cardContainer {
@@ -55,7 +57,7 @@
 }
 
 .card {
-    background-color: #ffffff;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -81,19 +83,38 @@
 }
 
 .btnDiscover {
-    margin-top: 10px;
-    padding: 10px 15px;
-    background-color: #0070f3;
+    margin-top: 30px;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    font-weight: 600;
     margin-left: auto;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 10px 20px;
+    position: relative;
+    text-decoration: none;
+    background: lighten(#800000, 3%);
+    border: 1px solid darken(#800000, 4%);
+    font-weight: 700;
+    transition: all 150ms linear;
 }
 
-.btnDiscover:hover {
-    background-color: #005bb5;
+.dateContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    margin: 20px 0;
+}
+
+.selectDate {
+    padding: 10px;
+}
+
+.card:hover .btnDiscover {
+    background: darken(#800000, 1.5%);
+    border: 1px solid rgba(#000, .05);
+    text-decoration: none;
+    transition: all 250ms linear;
 }
 
 .footer {
@@ -119,7 +140,7 @@
     left: 50%;
     transform: translate(-50%, 0);
     background-color: white;
-    padding: 20px;
+    padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -131,8 +152,8 @@
     font-size: 1.5rem;
     cursor: pointer;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
 }
 
 .calendarContainer {
@@ -140,4 +161,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+
+    input {
+        margin-left: 10px;
+    }
 }

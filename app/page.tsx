@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, MouseEvent } from 'react';
 import Head from 'next/head';
-import styles from './page.module.css';
+import styles from './page.module.scss';
 import testData from '../data/testData.json';
 
 export default function Home() {
@@ -59,17 +59,18 @@ export default function Home() {
             <option value="option3">Option 3</option>
           </select>
 
-          <label htmlFor="date-filter">Filtrer par date :</label>
-          <select id="date-filter" name="date-filter" value={selectedDateFilter} onChange={handleDateFilterChange}>
-            <option value="">Date indifférente</option>
-            <option value="lessThan1Hour">Moins d'une heure</option>
-            <option value="lessThan24Hours">Moins de 24 heures</option>
-            <option value="lessThan1Week">Moins d'une semaine</option>
-            <option value="lessThan1Month">Moins d'un mois</option>
-            <option value="lessThan1Year">Moins d'un an</option>
-            <option value="datesPrecises">Dates précises</option>
-          </select>
-
+          <div className={styles.dateContainer}>
+            <label htmlFor="date-filter">Filtrer par date :</label>
+            <select id="date-filter" className={styles.selectDate} name="date-filter" value={selectedDateFilter} onChange={handleDateFilterChange}>
+              <option value="">Date indifférente</option>
+              <option value="lessThan1Hour">Moins d'une heure</option>
+              <option value="lessThan24Hours">Moins de 24 heures</option>
+              <option value="lessThan1Week">Moins d'une semaine</option>
+              <option value="lessThan1Month">Moins d'un mois</option>
+              <option value="lessThan1Year">Moins d'un an</option>
+              <option value="datesPrecises">Dates précises</option>
+            </select>
+          </div>
           {showDatePopup && (
             <>
               <div className={styles.overlay} onClick={handleDatePopupClose}></div>
@@ -111,28 +112,30 @@ export default function Home() {
           </div>
         </aside>
 
-        {/* Contenu principal avec scroll et cards */}
         <main className={styles.main}>
           <h1 className={styles.title}>Résultats ({numberOfResults})</h1>
           <div className={styles.cardContainer}>
             {testData.map((item, index) => (
-              <div key={index} className={styles.card}>
+              <a
+                key={index}
+                className={styles.card}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h2>{item.title}</h2>
                 <p>{item.description.substring(0, 100)}...</p>
-                <button
-                  className={styles.btnDiscover}
-                  onClick={() => window.open(item.link, '_blank')}
-                >
-                  Découvrir l'article
-                </button>
-              </div>
+                <div className={styles.btnDiscover}>
+                  <span>Découvrir l'article</span>
+                </div>
+              </a>
             ))}
           </div>
         </main>
       </div>
 
       <footer className={styles.footer}>
-        <p>Développé avec Next.js</p>
+        <p>Développé par Juris Prudence</p>
       </footer>
     </div>
   );
