@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react';
 import './Main.css'
 import { assets } from '../../assets/assets'
 import Image from 'next/image';
 import './Main.css'
+import testData from '../../../data/testData.json';
 
 const Main = () => {
     return (
