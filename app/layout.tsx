@@ -1,6 +1,5 @@
 // app/layout.tsx
 import './globals.css'
-import AppBar from './components/AppBar'
 
 export const metadata = {
   title: 'Projet Dev',
@@ -15,7 +14,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <AppBar />
         {children}
       </body>
     </html>

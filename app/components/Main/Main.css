@@ -1,8 +1,11 @@
 .main {
     flex: 1;
     min-height: 100vh;
-    padding-bottom: 15vh;
     position: relative;
+}
+
+body {
+    display: flex;
 }
 
 .main .nav {
@@ -15,7 +18,7 @@
 }
 
 .main .nav img {
-    width: 40%;
+    width: 40px;
     border-radius: 50%;
 }
 
@@ -25,11 +28,11 @@
 }
 
 .main .greet {
-    margin: 50px 0;
-    font-size: 56px;
+    margin: 40px 0;
+    font-size: 46px;
     color: #c4c7c5;
     font-weight: 500;
-    padding: 20px;
+    padding: 0 20px;
 }
 
 .main .greet span {
@@ -46,7 +49,7 @@
 }
 
 .main .card {
-    height: 200px;
+    height: 150px;
     padding: 15px;
     background-color: #f0f4f9;
     border-radius: 10px;
@@ -62,4 +65,70 @@
     border-radius: 20px;
     bottom: 10px;
     right: 10px;
+}
+
+.main .card p {
+    color: #585858;
+    font-size: 17px;
+}
+
+.main .card:hover {
+    background-color: #dfe4ea;
+}
+
+.main-top {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 20px;
+    margin: 50px auto 0 auto;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #f0f4f9;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.search-box img {
+    width: 24px;
+    cursor: pointer;
+}
+
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 18px;
+}
+
+.search-box div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+    .main-top input {
+        flex: none;
+        width: 150px;
+    }
+
+    .main-top img {
+        width: 20px;
+    }
+
+    .search-box {
+        padding: 5px 10px;
+    }
+
+    .search-box div {
+        gap: 5px;
+    }
 }

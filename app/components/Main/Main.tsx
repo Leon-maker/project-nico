@@ -1,34 +1,45 @@
 import React from 'react'
 import './Main.css'
+import { assets } from '../../assets/assets'
+import Image from 'next/image';
+import './Main.css'
 
 const Main = () => {
     return (
         <div className="main">
-            <div className="nav">
-                <p>Gemini</p>
-                <img src={assets.user_icon} alt="" />
-            </div>
             <div className="main-container">
+                <div className="nav">
+                    <p>JurisPrudence</p>
+                    <Image src={assets.user_icon} alt="" />
+                </div>
+                <div className="main-top">
+                    <div className="search-box">
+                        <input type="text" placeholder="Entrer votre recherche" />
+                        <div>
+                            <Image src={assets.send_icon} alt="" />
+                        </div>
+                    </div>
+                </div>
                 <div className="greet">
-                    <p><span>Hello, Dev</span></p>
-                    <p>How can I help you today ?</p>
+                    <p><span>Bonjour,</span></p>
+                    <p>Que puis-je faire pour vous ?</p>
                 </div>
                 <div className="cards">
                     <div className="card">
-                        <p>Suggest beautiful places to see on an upcoming road trip</p>
-                        <img src={assets.compass_icon} alt="" />
+                        <p>Quelle différence entre mandat et procuration ?</p>
+                        <Image src={assets.compass_icon} alt="" />
                     </div>
                     <div className="card">
-                        <p>Briefly summarize this concept: urban planning</p>
-                        <img src={assets.bulb_icon} alt="" />
+                        <p>Quand invoquer la force majeure ?</p>
+                        <Image src={assets.bulb_icon} alt="" />
                     </div>
                     <div className="card">
-                        <p>Brainstorm team bonding activities for our work retreat</p>
-                        <img src={assets.message_icon} alt="" />
+                        <p>Différence entre responsabilité civile et pénale ?</p>
+                        <Image src={assets.message_icon} alt="" />
                     </div>
                     <div className="card">
-                        <p>Improve the readability of the following code</p>
-                        <img src={assets.code_icon} alt="" />
+                        <p>Quels droits pour un salarié licencié ?</p>
+                        <Image src={assets.code_icon} alt="" />
                     </div>
                 </div>
             </div>

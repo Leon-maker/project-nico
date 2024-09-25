@@ -63,4 +63,12 @@
 .sidebar .bottom-item {
     padding-right: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        display: none;
+    }
 }

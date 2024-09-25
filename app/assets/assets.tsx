@@ -13,6 +13,10 @@ import message_icon from './message_icon.png'
 import code_icon from './code_icon.png'
 import send_icon from './send_icon.png'
 import gemini_icon from './gemini_icon.png'
+import ampoule_icon from './ampoule.png'
+import document_icon from './document.png'
+import marteau_icon from './marteau.png'
+import tribunal_icon from './tribunal.png'
 
 export const assets = {
     history_icon,
@@ -29,5 +33,9 @@ export const assets = {
     message_icon,
     code_icon,
     send_icon,
-    gemini_icon
+    gemini_icon,
+    ampoule_icon,
+    document_icon,
+    marteau_icon,
+    tribunal_icon
 }
