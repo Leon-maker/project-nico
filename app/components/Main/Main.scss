@@ -26,6 +26,10 @@ body {
     margin: 0 50px;
 }
 
+select {
+    cursor: pointer;
+}
+
 .main .greet {
     margin: 40px 0;
     font-size: 46px;
@@ -77,16 +81,32 @@ body {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
+                h4 {
+                    font-size: 20px;
+                }
             }
 
             .filters {
-                padding: 20px;
+                padding: 50px 20px;
                 gap: 10px;
                 display: flex;
                 flex-direction: column;
+                row-gap: 30px;
+
+                .date-container {
+                    display: flex;
+                    flex-direction: column;
+
+                    label {
+                        font-size: 20px;
+                        margin-bottom: 10px;
+                    }
+                }
 
                 h2 {
                     font-size: 20px;
+                    margin-bottom: 10px;
                 }
 
                 .filter-tags {
