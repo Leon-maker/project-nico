@@ -114,6 +114,12 @@ body {
     gap: 15px;
 }
 
+.main-result {
+    padding: 0 20px;
+}
+
+.main-result .card-container {}
+
 @media (max-width: 600px) {
     .main-top input {
         flex: none;
