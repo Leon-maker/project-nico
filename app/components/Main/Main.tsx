@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import './Main.css';
+import './Main.scss';
 import { assets } from '../../assets/assets';
 import Image from 'next/image';
 import testData from '../../../data/testData.json';
@@ -16,6 +16,7 @@ interface Card {
 const Main = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchResults, setSearchResults] = useState<Card[]>([]);
+    const [sortOrder, setSortOrder] = useState<string>('newest');
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -44,23 +45,69 @@ const Main = () => {
 
                 {searchResults.length > 0 && (
                     <div className="main-result">
-                        <h2>Votre Recherche : {searchTerm}</h2>
-                        <div className="card-container">
-                            {searchResults.map((item, index) => (
-                                <a
-                                    key={index}
-                                    className="card-result"
-                                    href={item.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                        <div className="top-bar">
+                            <p className='result-number'>Results ({searchResults.length})</p>
+                            <div className="select-container">
+                                <p>Trier par :</p>
+                                <select
+                                    value={sortOrder}
+                                    onChange={(e) => setSortOrder(e.target.value)}
                                 >
-                                    <h2>{item.title}</h2>
-                                    <p>{item.description.substring(0, 100)}...</p>
-                                    <div className="btn-discover">
-                                        <span>Découvrir l&apos;article</span>
+                                    <option value="newest">Nouveau</option>
+                                    <option value="oldest">Ancien</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="content">
+                            <div className="sidebar">
+                                <div className="top-sidebar">
+                                    <h4>Recherche Avancée</h4>
+                                    <p className="clean">Effacer</p>
+                                </div>
+                                <div className="filters">
+                                    <p>Types de documents :</p>
+                                    <div className="filter-tags">
+                                        <label className="checkbox-container">
+                                            <input type="checkbox" name="ordonnances" />
+                                            <span className="custom-checkbox"></span>
+                                            Ordonnances
+                                        </label>
+
+                                        <label className="checkbox-container">
+                                            <input type="checkbox" name="articles" />
+                                            <span className="custom-checkbox"></span>
+                                            Articles
+                                        </label>
+
+                                        <label className="checkbox-container">
+                                            <input type="checkbox" name="contrats" />
+                                            <span className="custom-checkbox"></span>
+                                            Contrats
+                                        </label>
                                     </div>
-                                </a>
-                            ))}
+                                </div>
+                                <div className="search-div">
+                                    <button>Recherche</button>
+                                </div>
+                            </div>
+
+                            <div className="card-container">
+                                {searchResults.map((item, index) => (
+                                    <a
+                                        key={index}
+                                        className="card-result"
+                                        href={item.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <h2>{item.title}</h2>
+                                        <p>{item.description.substring(0, 100)}...</p>
+                                        <div className="btn-discover">
+                                            <span>Découvrir l&apos;article</span>
+                                        </div>
+                                    </a>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}

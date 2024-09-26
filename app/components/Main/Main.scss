@@ -1,0 +1,300 @@
+.main {
+    flex: 1;
+    min-height: 100vh;
+    position: relative;
+}
+
+body {
+    display: flex;
+}
+
+.main .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 22px;
+    padding: 20px;
+    color: #585858;
+}
+
+.main .nav img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.main-container {
+    margin: 0 50px;
+}
+
+.main .greet {
+    margin: 40px 0;
+    font-size: 46px;
+    color: #c4c7c5;
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+.main {
+
+    .main-welcome {
+        max-width: 900px;
+    }
+
+    .main-result {
+        padding: 50px 20px;
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba($color: #800000, $alpha: 0.2);
+
+        .result-number {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .select-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+
+    .content {
+        display: flex;
+        gap: 50px;
+        margin: 40px 0;
+
+        .sidebar {
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius: 10px;
+
+            .top-sidebar {
+                padding: 20px;
+                border-bottom: 1px solid rgba($color: #800000, $alpha: 0.2);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .filters {
+                padding: 20px;
+                gap: 10px;
+                display: flex;
+                flex-direction: column;
+
+                .filter-tags {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .checkbox-container {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    padding-left: 30px;
+                    margin-bottom: 12px;
+                    cursor: pointer;
+                    font-size: 18px;
+                    user-select: none;
+
+                    &:hover input~.custom-checkbox {
+                        background-color: #ddd;
+                    }
+
+
+                    input {
+                        position: absolute;
+                        opacity: 0;
+                        cursor: pointer;
+
+                        &:checked~.custom-checkbox {
+                            background-color: #4CAF50;
+                            border-color: #4CAF50;
+                        }
+
+                    }
+
+                    .custom-checkbox {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 20px;
+                        width: 20px;
+                        background-color: #f1f1f1;
+                        border: 2px solid #ccc;
+                        transition: background-color 0.3s ease;
+
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .search-div {
+                padding: 20px;
+                border-top: 1px solid rgba($color: #800000, $alpha: 0.2);
+
+                button {
+                    background-color: #800000;
+                    color: white;
+                    width: 100%;
+                    padding: 15px;
+                    border-radius: 25px;
+                }
+            }
+        }
+    }
+}
+
+.main .greet span {
+    background: -webkit-linear-gradient(16deg, black, #800000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+.main .card {
+    height: 150px;
+    padding: 15px;
+    background-color: #f0f4f9;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.main .card img {
+    width: 35px;
+    padding: 5px;
+    position: absolute;
+    background: white;
+    border-radius: 20px;
+    bottom: 10px;
+    right: 10px;
+}
+
+.main .card p {
+    color: #585858;
+    font-size: 17px;
+}
+
+.main .card:hover {
+    background-color: #dfe4ea;
+}
+
+.main-top {
+    position: relative;
+    width: 100%;
+    padding: 0 20px;
+    margin: 50px auto 0 auto;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #f0f4f9;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.search-box img {
+    width: 24px;
+    cursor: pointer;
+}
+
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 18px;
+}
+
+.search-box div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.main-result .card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.main-result .card-container .card-result {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-result:hover {
+    transform: scale(1.02);
+}
+
+.card-result h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.card-result p {
+    font-size: 1rem;
+    color: #666;
+    text-align: start;
+}
+
+.btn-discover {
+    margin-top: 30px;
+    color: white;
+    font-weight: 600;
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 10px 20px;
+    position: relative;
+    text-decoration: none;
+    background: lighten(#800000, 3%);
+    border: 1px solid darken(#800000, 4%);
+    font-weight: 700;
+    transition: all 150ms linear;
+    border-radius: 25px;
+}
+
+@media (max-width: 600px) {
+    .main-top input {
+        flex: none;
+        width: 150px;
+    }
+
+    .main-top img {
+        width: 20px;
+    }
+
+    .search-box {
+        padding: 5px 10px;
+    }
+
+    .search-box div {
+        gap: 5px;
+    }
+}
