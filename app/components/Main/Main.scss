@@ -85,6 +85,10 @@ body {
                 display: flex;
                 flex-direction: column;
 
+                h2 {
+                    font-size: 20px;
+                }
+
                 .filter-tags {
                     display: flex;
                     flex-direction: column;
@@ -102,6 +106,7 @@ body {
 
                     &:hover input~.custom-checkbox {
                         background-color: #ddd;
+                        border: 1px solid #800000;
                     }
 
 
@@ -111,15 +116,14 @@ body {
                         cursor: pointer;
 
                         &:checked~.custom-checkbox {
-                            background-color: #4CAF50;
-                            border-color: #4CAF50;
+                            background-color: #800000;
+                            border-color: #800000;
                         }
 
                     }
 
                     .custom-checkbox {
                         position: absolute;
-                        top: 0;
                         left: 0;
                         height: 20px;
                         width: 20px;

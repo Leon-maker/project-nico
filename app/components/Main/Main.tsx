@@ -65,7 +65,7 @@ const Main = () => {
                                     <p className="clean">Effacer</p>
                                 </div>
                                 <div className="filters">
-                                    <p>Types de documents :</p>
+                                    <h2>Types de documents :</h2>
                                     <div className="filter-tags">
                                         <label className="checkbox-container">
                                             <input type="checkbox" name="ordonnances" />
