@@ -2,28 +2,31 @@
     flex: 1;
     min-height: 100vh;
     position: relative;
+    padding: 0 50px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 22px;
+        padding: 20px;
+
+        .logo {
+            color: #800000;
+        }
+    }
+
 }
 
 body {
     display: flex;
 }
 
-.main .nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 22px;
-    padding: 20px;
-    color: #585858;
-}
+.main .nav {}
 
 .main .nav img {
     width: 40px;
     border-radius: 50%;
-}
-
-.main-container {
-    margin: 0 50px;
 }
 
 select {
@@ -321,5 +324,49 @@ select {
 
     .search-box div {
         gap: 5px;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    filter: blur(4px);
+    z-index: 900;
+}
+
+.datePopup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: white;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.calendarContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    input {
+        margin-left: 10px;
     }
 }
