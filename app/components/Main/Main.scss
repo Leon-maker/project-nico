@@ -30,15 +30,14 @@ select {
     cursor: pointer;
 }
 
-.main .greet {
-    margin: 40px 0;
-    font-size: 46px;
-    color: #c4c7c5;
-    font-weight: 500;
-    padding: 0 20px;
-}
-
 .main {
+
+    .greet {
+        margin: 40px 0;
+        font-size: 46px;
+        color: #c4c7c5;
+        font-weight: 500;
+    }
 
     .main-welcome {
         max-width: 900px;
@@ -74,6 +73,9 @@ select {
         .sidebar {
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             border-radius: 10px;
+            height: fit-content;
+            top: 40px;
+            position: sticky;
 
             .top-sidebar {
                 padding: 20px;
@@ -220,8 +222,7 @@ select {
 .main-top {
     position: relative;
     width: 100%;
-    padding: 0 20px;
-    margin: 50px auto 0 auto;
+    margin: 0 auto 50px auto;
 }
 
 .search-box {
