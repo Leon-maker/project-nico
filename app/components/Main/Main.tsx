@@ -60,7 +60,12 @@ const Main = () => {
         <div className="main">
             <div className="header">
                 <p className="logo">JurisPrudence</p>
-                <Image src={assets.user_icon} alt="" />
+                <div className="image-container">
+                    <Image src={assets.user_icon} alt="" />
+                    <div className="logout">
+                        <button>Deconnexion</button>
+                    </div>
+                </div>
             </div>
 
             <div className="main-result">

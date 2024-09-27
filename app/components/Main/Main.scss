@@ -13,21 +13,48 @@
 
         .logo {
             color: #800000;
+            font-weight: 500;
+        }
+
+        .image-container {
+            position: relative;
+
+            img {
+                width: 40px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .logout {
+                position: absolute;
+                border-radius: 20px;
+                background-color: white;
+                display: none;
+                padding: 20px;
+                top: 0;
+                right: 0;
+                font-size: 12px;
+                color: red;
+                font-weight: 500;
+                opacity: 0;
+                transition: opacity 0.6s ease-in-out;
+
+                button {
+                    cursor: pointer;
+                }
+            }
+
+            &:hover {
+                .logout {
+                    display: flex;
+                    opacity: 1;
+                }
+            }
         }
     }
 
 }
 
-body {
-    display: flex;
-}
-
-.main .nav {}
-
-.main .nav img {
-    width: 40px;
-    border-radius: 50%;
-}
 
 select {
     cursor: pointer;
