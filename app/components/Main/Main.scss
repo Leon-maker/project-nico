@@ -157,8 +157,7 @@ select {
                     user-select: none;
 
                     &:hover input~.custom-checkbox {
-                        background-color: #ddd;
-                        border: 1px solid #800000;
+                        border: 2px solid #800000;
                     }
 
 
@@ -170,6 +169,18 @@ select {
                         &:checked~.custom-checkbox {
                             background-color: #800000;
                             border-color: #800000;
+
+                            &::after {
+                                content: " ";
+                                width: 10px;
+                                height: 6px;
+                                margin: 4px;
+                                border-top: 2px solid white;
+                                border-right: 2px solid white;
+                                transform: rotate(135deg);
+                                position: absolute;
+
+                            }
                         }
 
                     }
@@ -179,15 +190,9 @@ select {
                         left: 0;
                         height: 20px;
                         width: 20px;
-                        background-color: #f1f1f1;
+                        border-radius: 5px;
                         border: 2px solid #ccc;
                         transition: background-color 0.3s ease;
-
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            display: none;
-                        }
                     }
                 }
             }
@@ -226,7 +231,6 @@ select {
     padding: 15px;
     background-color: #f0f4f9;
     border-radius: 10px;
-    position: relative;
     cursor: pointer;
 }
 
@@ -250,7 +254,6 @@ select {
 }
 
 .main-top {
-    position: relative;
     width: 100%;
     margin: 0 auto 50px auto;
 }
@@ -362,7 +365,7 @@ select {
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
     filter: blur(4px);
-    z-index: 900;
+    backdrop-filter: blur(3px);
 }
 
 .datePopup {

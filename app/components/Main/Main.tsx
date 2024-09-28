@@ -17,12 +17,14 @@ const Main = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchResults, setSearchResults] = useState<Card[]>([]);
     const [sortOrder, setSortOrder] = useState<string>('newest');
+    const [dateFilter, setDateFilter] = useState<string>(''); // Nouvelle variable pour le filtre de date
     const [showDatePopup, setShowDatePopup] = useState<boolean>(false);
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
 
     const handleDateFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value;
+        setDateFilter(selectedValue); // Met à jour la nouvelle variable pour la date
 
         if (selectedValue === 'datesPrecises') {
             setShowDatePopup(true);
@@ -113,13 +115,19 @@ const Main = () => {
                             <div className="filter">
                                 <div className="date-container">
                                     <label htmlFor="date-filter">Filtrer par date :</label>
-                                    <select id="date-filter" className="select-date" name="date-filter">
+                                    <select
+                                        id="date-filter"
+                                        className="select-date"
+                                        name="date-filter"
+                                        value={dateFilter} // Utilisation de la nouvelle variable ici
+                                        onChange={handleDateFilterChange}
+                                    >
                                         <option value="">Date indifférente</option>
-                                        <option value="lessThan1Hour">Moins d'une heure</option>
+                                        <option value="lessThan1Hour">Moins d&#39;une heure</option>
                                         <option value="lessThan24Hours">Moins de 24 heures</option>
-                                        <option value="lessThan1Week">Moins d'une semaine</option>
-                                        <option value="lessThan1Month">Moins d'un mois</option>
-                                        <option value="lessThan1Year">Moins d'un an</option>
+                                        <option value="lessThan1Week">Moins d&#39;une semaine</option>
+                                        <option value="lessThan1Month">Moins d&#39;un mois</option>
+                                        <option value="lessThan1Year">Moins d&#39;un an</option>
                                         <option value="datesPrecises">Dates précises</option>
                                     </select>
                                     {showDatePopup && (
