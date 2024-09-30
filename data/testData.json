@@ -3,60 +3,70 @@
         "title": "Next.js Documentation",
         "description": "Documentation officielle de Next.js pour apprendre et comprendre les fonctionnalités de ce framework.",
         "link": "https://nextjs.org/docs",
-        "date": "2023-08-15"
+        "date": "2023-08-15T00:00:00Z",
+        "type": "Documentation"
     },
     {
         "title": "React Tutorial",
         "description": "Guide interactif pour apprendre à utiliser React, la bibliothèque front-end utilisée par Next.js.",
         "link": "https://reactjs.org/tutorial/tutorial.html",
-        "date": "2023-07-22"
+        "date": "2023-07-22T00:00:00Z",
+        "type": "Tutorial"
     },
     {
         "title": "GitHub Repository",
         "description": "Dépôt GitHub contenant le code source d'un projet Next.js.",
         "link": "https://github.com/vercel/next.js",
-        "date": "2023-09-01"
+        "date": "2023-09-01T00:00:00Z",
+        "type": "Repository"
     },
     {
         "title": "JavaScript Info",
         "description": "Un site pour tout apprendre sur le langage JavaScript, de la base à des concepts avancés.",
         "link": "https://javascript.info/",
-        "date": "2024-06-30"
+        "date": "2024-06-30T00:00:00Z",
+        "type": "Documentation"
     },
     {
         "title": "CSS Tricks",
         "description": "Une collection de trucs et astuces pour maîtriser le CSS et les styles dans les projets web.",
         "link": "https://css-tricks.com/",
-        "date": "2023-08-05"
+        "date": "2023-08-05T00:00:00Z",
+        "type": "Blog"
     },
     {
         "title": "MDN Web Docs",
         "description": "Documentation web de Mozilla avec des tutoriels et des références pour le développement web.",
         "link": "https://developer.mozilla.org/en-US/",
-        "date": "2023-07-18"
+        "date": "2023-07-18T00:00:00Z",
+        "type": "Documentation"
     },
     {
         "title": "Frontend Mentor",
         "description": "Plateforme pour s'entraîner au développement front-end avec des challenges de design.",
         "link": "https://www.frontendmentor.io/",
-        "date": "2023-08-25"
+        "date": "2023-08-25T00:00:00Z",
+        "type": "Platform"
     },
     {
         "title": "Stack Overflow",
         "description": "Communauté en ligne pour poser des questions et trouver des réponses sur le développement logiciel.",
         "link": "https://stackoverflow.com/",
-        "date": "2023-09-10"
+        "date": "2023-09-10T00:00:00Z",
+        "type": "Forum"
     },
     {
         "title": "Tailwind CSS",
         "description": "Documentation officielle de Tailwind CSS, un framework de style utilitaire.",
         "link": "https://tailwindcss.com/docs",
-        "date": "2023-07-05"
+        "date": "2023-07-05T00:00:00Z",
+        "type": "Documentation"
     },
     {
         "title": "Vercel",
         "description": "Plateforme pour déployer des applications Next.js avec une intégration facile.",
         "link": "https://vercel.com/",
-        "date": "2023-09-20"
+        "date": "2023-09-20T00:00:00Z",
+        "type": "Platform"
     }
 ]

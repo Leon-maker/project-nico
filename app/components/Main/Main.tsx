@@ -10,6 +10,7 @@ interface Card {
     title: string;
     description: string;
     link: string;
+    type: string;
     date: string;
 }
 
@@ -24,7 +25,14 @@ const Main = () => {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [revealClass, setRevealClass] = useState<string>('');
-    const [welcomeDisplayed, setWelcomeDisplayed] = useState<boolean>(true); // Ajout d'un état pour suivre l'affichage de la page de bienvenue
+    const [welcomeDisplayed, setWelcomeDisplayed] = useState<boolean>(true);
+    const [displayStartDate, setDisplayStartDate] = useState<string>('');
+    const [displayEndDate, setDisplayEndDate] = useState<string>('');
+    const [documentTypes, setDocumentTypes] = useState({
+        ordonnances: false,
+        articles: false,
+        decisions: false,
+    });
 
     const sortResults = (results: Card[], order: string): Card[] => {
         return results.sort((a, b) => {
@@ -39,17 +47,21 @@ const Main = () => {
         setSearchResults(sortResults(searchResults, e.target.value));
     };
 
+    const handleRegister = () => {
+        setDisplayStartDate(startDate);
+        setDisplayEndDate(endDate);
+        setShowDatePopup(false); // Fermer la popup après l'enregistrement
+        handleSearch(); // Ré-exécuter la recherche pour mettre à jour les résultats
+    };
+
     const handleDateFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value as DateFilter;
+        console.log(selectedValue);
         setDateFilter(selectedValue);
+
         setShowDatePopup(selectedValue === 'datesPrecises');
 
-        // Appliquer le filtre de date
-        const filteredResults = filterByDate(searchResults);
-        setSearchResults(sortResults(filteredResults, sortOrder)); // Mettez à jour directement les résultats
-
-        // Optionnel : si vous voulez exécuter handleSearch après le changement de date
-        handleSearch(); // Si vous avez besoin de re-trier par date
+        handleSearch();
     };
 
 
@@ -70,12 +82,10 @@ const Main = () => {
             }
         }
 
-        // Filtrez d'abord par le terme de recherche
         let results = testData.filter((card: Card) =>
             card.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
-        // Filtrer par date si des résultats sont fournis
         results = filterByDate(results);
 
         setSearchResults(sortResults(results, sortOrder));
@@ -85,16 +95,24 @@ const Main = () => {
             setRevealClass('in');
         }, 400);
 
-        // Afficher la page de bienvenue une seule fois
         setWelcomeDisplayed(false);
     };
 
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.target;
+        setDocumentTypes((prev) => ({
+            ...prev,
+            [name]: checked,
+        }));
+    };
 
     const filterByDate = (results: Card[]) => {
         const currentDate = Date.now();
+        console.log("Filtrage par date avec : ", dateFilter);
 
         return results.filter((card: Card) => {
             const cardDate = new Date(card.date).getTime();
+
             switch (dateFilter) {
                 case 'datesPrecises':
                     if (!startDate || !endDate) {
@@ -175,19 +193,34 @@ const Main = () => {
                                 <h2>Documents :</h2>
                                 <div className="filter-tags">
                                     <label className="checkbox-container">
-                                        <input type="checkbox" name="ordonnances" />
+                                        <input
+                                            type="checkbox"
+                                            name="ordonnances"
+                                            checked={documentTypes.ordonnances}
+                                            onChange={handleCheckboxChange}
+                                        />
                                         <span className="custom-checkbox"></span>
                                         Ordonnances
                                     </label>
 
                                     <label className="checkbox-container">
-                                        <input type="checkbox" name="articles" />
+                                        <input
+                                            type="checkbox"
+                                            name="articles"
+                                            checked={documentTypes.articles}
+                                            onChange={handleCheckboxChange}
+                                        />
                                         <span className="custom-checkbox"></span>
                                         Articles
                                     </label>
 
                                     <label className="checkbox-container">
-                                        <input type="checkbox" name="decisions" />
+                                        <input
+                                            type="checkbox"
+                                            name="decisions"
+                                            checked={documentTypes.decisions}
+                                            onChange={handleCheckboxChange}
+                                        />
                                         <span className="custom-checkbox"></span>
                                         Décisions
                                     </label>
@@ -210,36 +243,10 @@ const Main = () => {
                                         <option value="lessThan1Year">Moins d&#39;un an</option>
                                         <option value="datesPrecises">Dates précises</option>
                                     </select>
-                                    {showDatePopup && (
-                                        <>
-                                            <div className="overlay" onClick={() => setShowDatePopup(false)}></div>
-                                            <div className="date-popup">
-                                                <div className="content-popup">
-                                                    <button className="close-button" onClick={() => setShowDatePopup(false)}>X</button>
-                                                    <h3>Dates précises</h3>
-                                                    <div className="calendar-container">
-                                                        <label>
-                                                            De :
-                                                            <input
-                                                                type="date"
-                                                                value={startDate}
-                                                                onChange={handleStartDateChange}
-                                                            />
-                                                        </label>
-                                                        <label>
-                                                            À :
-                                                            <input
-                                                                type="date"
-                                                                value={endDate}
-                                                                onChange={handleEndDateChange}
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <button className="register-button button-primary" onClick={() => setShowDatePopup(false)}>Enregistrer</button>
-                                            </div>
-                                        </>
-                                    )}
+                                </div>
+                                <div className="selected-dates">
+                                    <p>Date de début sélectionnée : <span>{displayStartDate || 'Non spécifiée'}</span></p>
+                                    <p>Date de fin sélectionnée : <span>{displayEndDate || 'Non spécifiée'}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -290,8 +297,38 @@ const Main = () => {
                                 </div>
                             )}
                         </div>
-
                     </div>
+                )}
+
+                {showDatePopup && (
+                    <>
+                        <div className="overlay" onClick={() => setShowDatePopup(false)}></div>
+                        <div className="date-popup">
+                            <div className="content-popup">
+                                <button className="close-button" onClick={() => setShowDatePopup(false)}>X</button>
+                                <h3>Dates précises</h3>
+                                <div className="calendar-container">
+                                    <label>
+                                        De :
+                                        <input
+                                            type="date"
+                                            value={startDate}
+                                            onChange={handleStartDateChange}
+                                        />
+                                    </label>
+                                    <label>
+                                        À :
+                                        <input
+                                            type="date"
+                                            value={endDate}
+                                            onChange={handleEndDateChange}
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            <button className="register-button button-primary" onClick={handleRegister}>Enregistrer</button>
+                        </div>
+                    </>
                 )}
             </div>
         </div>
