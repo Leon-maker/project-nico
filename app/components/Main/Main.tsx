@@ -6,32 +6,52 @@ import { assets } from '../../assets/assets';
 import Image from 'next/image';
 import testData from '../../../data/testData.json';
 
-// Interface pour le type des cartes
 interface Card {
     title: string;
     description: string;
     link: string;
+    date: string;
 }
+
+type DateFilter = 'datesPrecises' | 'lessThan1Hour' | 'lessThan24Hours' | 'lessThan1Week' | 'lessThan1Month' | 'lessThan1Year' | '';
 
 const Main = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchResults, setSearchResults] = useState<Card[]>([]);
     const [sortOrder, setSortOrder] = useState<string>('newest');
-    const [dateFilter, setDateFilter] = useState<string>(''); // Nouvelle variable pour le filtre de date
+    const [dateFilter, setDateFilter] = useState<DateFilter>('');
     const [showDatePopup, setShowDatePopup] = useState<boolean>(false);
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
+    const [revealClass, setRevealClass] = useState<string>('');
+    const [welcomeDisplayed, setWelcomeDisplayed] = useState<boolean>(true); // Ajout d'un état pour suivre l'affichage de la page de bienvenue
+
+    const sortResults = (results: Card[], order: string): Card[] => {
+        return results.sort((a, b) => {
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
+            return order === 'newest' ? dateB - dateA : dateA - dateB;
+        });
+    };
+
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOrder(e.target.value);
+        setSearchResults(sortResults(searchResults, e.target.value));
+    };
 
     const handleDateFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedValue = e.target.value;
-        setDateFilter(selectedValue); // Met à jour la nouvelle variable pour la date
+        const selectedValue = e.target.value as DateFilter;
+        setDateFilter(selectedValue);
+        setShowDatePopup(selectedValue === 'datesPrecises');
 
-        if (selectedValue === 'datesPrecises') {
-            setShowDatePopup(true);
-        } else {
-            setShowDatePopup(false);
-        }
+        // Appliquer le filtre de date
+        const filteredResults = filterByDate(searchResults);
+        setSearchResults(sortResults(filteredResults, sortOrder)); // Mettez à jour directement les résultats
+
+        // Optionnel : si vous voulez exécuter handleSearch après le changement de date
+        handleSearch(); // Si vous avez besoin de re-trier par date
     };
+
 
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStartDate(e.target.value);
@@ -41,57 +61,118 @@ const Main = () => {
         setEndDate(e.target.value);
     };
 
-    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (searchTerm.trim() === '') {
-            alert("Veuillez entrer un terme de recherche.");
-            return;
+    const handleSearch = (e?: React.FormEvent<HTMLFormElement>) => {
+        if (e) {
+            e.preventDefault();
+            if (!searchTerm.trim()) {
+                alert("Veuillez entrer un terme de recherche.");
+                return;
+            }
         }
 
-        const results = testData.filter((card: Card) =>
+        // Filtrez d'abord par le terme de recherche
+        let results = testData.filter((card: Card) =>
             card.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
-        console.log("Résultats trouvés : ", results);
-        setSearchResults(results);
+        // Filtrer par date si des résultats sont fournis
+        results = filterByDate(results);
+
+        setSearchResults(sortResults(results, sortOrder));
+        setRevealClass('');
+
+        setTimeout(() => {
+            setRevealClass('in');
+        }, 400);
+
+        // Afficher la page de bienvenue une seule fois
+        setWelcomeDisplayed(false);
     };
 
+
+    const filterByDate = (results: Card[]) => {
+        const currentDate = Date.now();
+
+        return results.filter((card: Card) => {
+            const cardDate = new Date(card.date).getTime();
+            switch (dateFilter) {
+                case 'datesPrecises':
+                    if (!startDate || !endDate) {
+                        return false;
+                    }
+                    return cardDate >= new Date(startDate).getTime() && cardDate <= new Date(endDate).getTime();
+                case 'lessThan1Hour':
+                    return (currentDate - cardDate) < 60 * 60 * 1000;
+                case 'lessThan24Hours':
+                    return (currentDate - cardDate) < 24 * 60 * 60 * 1000;
+                case 'lessThan1Week':
+                    return (currentDate - cardDate) < 7 * 24 * 60 * 60 * 1000;
+                case 'lessThan1Month':
+                    return (currentDate - cardDate) < 30 * 24 * 60 * 60 * 1000;
+                case 'lessThan1Year':
+                    return (currentDate - cardDate) < 365 * 24 * 60 * 60 * 1000;
+                default:
+                    return true;
+            }
+        });
+    };
 
     return (
         <div className="main">
             <div className="header">
                 <p className="logo">JurisPrudence</p>
-                <div className="image-container">
-                    <Image src={assets.user_icon} alt="" />
-                    <div className="logout">
-                        <button>Deconnexion</button>
-                    </div>
-                </div>
+                <button className="button-primary">Deconnexion</button>
             </div>
+            <div className="container-main">
+                <form className="search-box" onSubmit={handleSearch}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19.035" height="19.039" viewBox="0 0 19.035 19.039">
+                        <g id="_x32_-Magnifying_Glass" transform="translate(-7.129 -7.125)">
+                            <path id="Tracé_26867" data-name="Tracé 26867" d="M25.834,24.239l-3.659-3.659a8.4,8.4,0,1,0-1.6,1.6l3.659,3.659a1.128,1.128,0,0,0,1.6-1.6Zm-14.658-4.4a6.127,6.127,0,1,1,4.332,1.795A6.134,6.134,0,0,1,11.176,19.841Z" />
+                        </g>
+                    </svg>
+                    <input
+                        type="text"
+                        placeholder="Entrer votre recherche"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button type="submit">
+                        <Image src={assets.send_icon} alt="Envoyer" />
+                    </button>
+                </form>
 
-            <div className="main-result">
-                <div className="top-bar">
-                    <p className='result-number'>Results ({searchResults.length})</p>
-                    <div className="select-container">
-                        <p>Trier par :</p>
-                        <select
-                            value={sortOrder}
-                            onChange={(e) => setSortOrder(e.target.value)}
-                        >
-                            <option value="newest">Nouveau</option>
-                            <option value="oldest">Ancien</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="content">
-                    <div className="sidebar">
-                        <div className="top-sidebar">
-                            <h4>Recherche Avancée</h4>
+                {welcomeDisplayed && searchResults.length === 0 && (
+                    <div className="welcome-content">
+                        <div className="greet">
+                            <p><span>Bonjour,</span></p>
+                            <p>Que puis-je faire pour vous ?</p>
                         </div>
-                        <div className="filters">
+                        <div className="cards">
+                            <div className="card">
+                                <Image src={assets.compass_icon} alt="" />
+                                <p>Quelle différence entre mandat et procuration ?</p>
+                            </div>
+                            <div className="card">
+                                <Image src={assets.bulb_icon} alt="" />
+                                <p>Quand invoquer la force majeure ?</p>
+                            </div>
+                            <div className="card">
+                                <Image src={assets.message_icon} alt="" />
+                                <p>Différence entre responsabilité civile et pénale ?</p>
+                            </div>
+                            <div className="card">
+                                <Image src={assets.code_icon} alt="" />
+                                <p>Quels droits pour un salarié licencié ?</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {!welcomeDisplayed && (
+                    <div className={`main-result reveal ${revealClass}`}>
+                        <div className="sidebar">
                             <div className="filter">
-                                <h2>Types de documents :</h2>
+                                <h2>Documents :</h2>
                                 <div className="filter-tags">
                                     <label className="checkbox-container">
                                         <input type="checkbox" name="ordonnances" />
@@ -106,20 +187,19 @@ const Main = () => {
                                     </label>
 
                                     <label className="checkbox-container">
-                                        <input type="checkbox" name="contrats" />
+                                        <input type="checkbox" name="decisions" />
                                         <span className="custom-checkbox"></span>
-                                        Contrats
+                                        Décisions
                                     </label>
                                 </div>
                             </div>
                             <div className="filter">
-                                <div className="date-container">
-                                    <label htmlFor="date-filter">Filtrer par date :</label>
+                                <h2>Date :</h2>
+                                <div className="select-date">
                                     <select
-                                        id="date-filter"
                                         className="select-date"
                                         name="date-filter"
-                                        value={dateFilter} // Utilisation de la nouvelle variable ici
+                                        value={dateFilter}
                                         onChange={handleDateFilterChange}
                                     >
                                         <option value="">Date indifférente</option>
@@ -134,100 +214,85 @@ const Main = () => {
                                         <>
                                             <div className="overlay" onClick={() => setShowDatePopup(false)}></div>
                                             <div className="date-popup">
-                                                <button className="close-button" onClick={() => setShowDatePopup(false)}>X</button>
-                                                <h3>Dates précises</h3>
-                                                <div className="calendar-container">
-                                                    <label>
-                                                        De :
-                                                        <input
-                                                            type="date"
-                                                            value={startDate}
-                                                            onChange={handleStartDateChange}
-                                                        />
-                                                    </label>
-                                                    <label>
-                                                        À :
-                                                        <input
-                                                            type="date"
-                                                            value={endDate}
-                                                            onChange={handleEndDateChange}
-                                                        />
-                                                    </label>
+                                                <div className="content-popup">
+                                                    <button className="close-button" onClick={() => setShowDatePopup(false)}>X</button>
+                                                    <h3>Dates précises</h3>
+                                                    <div className="calendar-container">
+                                                        <label>
+                                                            De :
+                                                            <input
+                                                                type="date"
+                                                                value={startDate}
+                                                                onChange={handleStartDateChange}
+                                                            />
+                                                        </label>
+                                                        <label>
+                                                            À :
+                                                            <input
+                                                                type="date"
+                                                                value={endDate}
+                                                                onChange={handleEndDateChange}
+                                                            />
+                                                        </label>
+                                                    </div>
                                                 </div>
+                                                <button className="register-button button-primary" onClick={() => setShowDatePopup(false)}>Enregistrer</button>
                                             </div>
                                         </>
                                     )}
                                 </div>
                             </div>
-
                         </div>
-                        <div className="search-div">
-                            <button>Recherche</button>
-                        </div>
-                    </div>
 
-                    <div className="main-welcome">
-                        <div className="main-top">
-                            <form className="search-box" onSubmit={handleSearch}>
-                                <input
-                                    type="text"
-                                    placeholder="Entrer votre recherche"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                                <button type="submit">
-                                    <Image src={assets.send_icon} alt="Envoyer" />
-                                </button>
-                            </form>
-                        </div>
-                        {searchResults.length === 0 && (
-                            <div className="welcome-content">
-                                <div className="greet">
-                                    <p><span>Bonjour,</span></p>
-                                    <p>Que puis-je faire pour vous ?</p>
-                                </div>
-                                <div className="cards">
-                                    <div className="card">
-                                        <p>Quelle différence entre mandat et procuration ?</p>
-                                        <Image src={assets.compass_icon} alt="" />
-                                    </div>
-                                    <div className="card">
-                                        <p>Quand invoquer la force majeure ?</p>
-                                        <Image src={assets.bulb_icon} alt="" />
-                                    </div>
-                                    <div className="card">
-                                        <p>Différence entre responsabilité civile et pénale ?</p>
-                                        <Image src={assets.message_icon} alt="" />
-                                    </div>
-                                    <div className="card">
-                                        <p>Quels droits pour un salarié licencié ?</p>
-                                        <Image src={assets.code_icon} alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                        {searchResults.length > 0 && (
-
-                            <div className="card-container">
-                                {searchResults.map((item, index) => (
-                                    <a
-                                        key={index}
-                                        className="card-result"
-                                        href={item.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                        <div className={`main-welcome`}>
+                            <div className="top-bar">
+                                <p className='result-number'>Résultats ({searchResults.length})</p>
+                                <div className="select-container">
+                                    <p>Trier par :</p>
+                                    <select
+                                        value={sortOrder}
+                                        onChange={handleSortChange}
                                     >
-                                        <h2>{item.title}</h2>
-                                        <p>{item.description.substring(0, 100)}...</p>
-                                        <div className="btn-discover">
-                                            <span>Découvrir l&apos;article</span>
-                                        </div>
-                                    </a>
-                                ))}
+                                        <option value="newest">Nouveau</option>
+                                        <option value="oldest">Ancien</option>
+                                    </select>
+                                </div>
                             </div>
-                        )}
+
+                            {searchResults.length == 0 && (
+                                <div className="no-results-message">
+                                    <p>Aucun résultat trouvé.</p>
+                                </div>
+                            )}
+
+                            {searchResults.length > 0 && (
+                                <div className={`card-container reveal in`}>
+                                    {searchResults.map((item, index) => (
+                                        <a
+                                            key={index}
+                                            className="card-result"
+                                            href={item.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <h2>{item.title}</h2>
+                                            <p>{item.description.substring(0, 100)}...</p>
+                                            <button className="btn-discover">
+                                                <span>Découvrir l&apos;article</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="7.136" height="12.519" viewBox="0 0 7.136 12.519">
+                                                    <g id="arrow-down-sign-to-navigate" transform="translate(-97.141 12.52) rotate(-90)" opacity="0.5">
+                                                        <path id="Tracé_26869" data-name="Tracé 26869" d="M6.26,104.277a.874.874,0,0,1-.62-.257L.258,98.637A.877.877,0,1,1,1.5,97.4L6.26,102.16,11.023,97.4a.877.877,0,0,1,1.24,1.24L6.88,104.02A.874.874,0,0,1,6.26,104.277Z" transform="translate(0 0)"></path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
