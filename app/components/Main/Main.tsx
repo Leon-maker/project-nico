@@ -33,6 +33,7 @@ const Main = () => {
         articles: false,
         decisions: false,
     });
+    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
     const sortResults = (results: Card[], order: string): Card[] => {
         return results.sort((a, b) => {
@@ -50,14 +51,24 @@ const Main = () => {
     const handleRegister = () => {
         setDisplayStartDate(startDate);
         setDisplayEndDate(endDate);
-        setShowDatePopup(false); // Fermer la popup après l'enregistrement
-        handleSearch(); // Ré-exécuter la recherche pour mettre à jour les résultats
+        setShowDatePopup(false);
+        handleSearch();
+    };
+
+    const toggleSidebar = () => {
+        setSidebarOpen(prevState => !prevState);
     };
 
     const handleDateFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value as DateFilter;
-        console.log(selectedValue);
         setDateFilter(selectedValue);
+
+        if (selectedValue !== 'datesPrecises') {
+            setStartDate('');
+            setEndDate('');
+            setDisplayStartDate('');
+            setDisplayEndDate('');
+        }
 
         setShowDatePopup(selectedValue === 'datesPrecises');
 
@@ -142,6 +153,8 @@ const Main = () => {
                 <button className="button-primary">Deconnexion</button>
             </div>
             <div className="container-main">
+                {sidebarOpen && <div className={`overlay`} onClick={toggleSidebar}></div>}
+
                 <form className="search-box" onSubmit={handleSearch}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19.035" height="19.039" viewBox="0 0 19.035 19.039">
                         <g id="_x32_-Magnifying_Glass" transform="translate(-7.129 -7.125)">
@@ -188,7 +201,7 @@ const Main = () => {
 
                 {!welcomeDisplayed && (
                     <div className={`main-result reveal ${revealClass}`}>
-                        <div className="sidebar">
+                        <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
                             <div className="filter">
                                 <h2>Documents :</h2>
                                 <div className="filter-tags">
@@ -229,28 +242,40 @@ const Main = () => {
                             <div className="filter">
                                 <h2>Date :</h2>
                                 <div className="select-date">
-                                    <select
-                                        className="select-date"
-                                        name="date-filter"
-                                        value={dateFilter}
-                                        onChange={handleDateFilterChange}
-                                    >
-                                        <option value="">Date indifférente</option>
-                                        <option value="lessThan1Hour">Moins d&#39;une heure</option>
-                                        <option value="lessThan24Hours">Moins de 24 heures</option>
-                                        <option value="lessThan1Week">Moins d&#39;une semaine</option>
-                                        <option value="lessThan1Month">Moins d&#39;un mois</option>
-                                        <option value="lessThan1Year">Moins d&#39;un an</option>
-                                        <option value="datesPrecises">Dates précises</option>
-                                    </select>
+                                    {(!sidebarOpen) &&
+                                        (<select
+                                            className="select-date"
+                                            name="date-filter"
+                                            value={dateFilter}
+                                            onChange={handleDateFilterChange}
+                                        >
+                                            <option value="">Date indifférente</option>
+                                            <option value="lessThan1Hour">Moins d&#39;une heure</option>
+                                            <option value="lessThan24Hours">Moins de 24 heures</option>
+                                            <option value="lessThan1Week">Moins d&#39;une semaine</option>
+                                            <option value="lessThan1Month">Moins d&#39;un mois</option>
+                                            <option value="lessThan1Year">Moins d&#39;un an</option>
+                                            <option value="datesPrecises">Dates précises</option>
+                                        </select>
+                                        )}
                                 </div>
-                                <div className="selected-dates">
-                                    <p>Date de début sélectionnée : <span>{displayStartDate || 'Non spécifiée'}</span></p>
-                                    <p>Date de fin sélectionnée : <span>{displayEndDate || 'Non spécifiée'}</span></p>
-                                </div>
+                                {(displayStartDate || displayEndDate || sidebarOpen) && (
+                                    <div className="selected-dates">
+                                        {(displayStartDate || displayEndDate || sidebarOpen) && (<p>Date de début : <input
+                                            type="date"
+                                            value={startDate}
+                                            onChange={handleStartDateChange}
+                                        /></p>)}
+                                        {(displayStartDate || displayEndDate || sidebarOpen) && (<p>Date de fin : <input
+                                            type="date"
+                                            value={endDate}
+                                            onChange={handleEndDateChange}
+                                        /></p>)}
+                                    </div>
+                                )}
                             </div>
                         </div>
-
+                        {(sidebarOpen) && (<button className="search-btn button-primary">Appliquer</button>)}
                         <div className={`main-welcome`}>
                             <div className="top-bar">
                                 <p className='result-number'>Résultats ({searchResults.length})</p>
@@ -264,6 +289,7 @@ const Main = () => {
                                         <option value="oldest">Ancien</option>
                                     </select>
                                 </div>
+                                <button className="button-primary open-filter" onClick={toggleSidebar}>Filtres</button>
                             </div>
 
                             {searchResults.length == 0 && (

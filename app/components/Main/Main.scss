@@ -4,11 +4,12 @@
     position: relative;
 
     .header {
+        z-index: 3;
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: 22px;
-        padding: 20px 50px;
+        padding: 15px 25px;
         box-shadow: rgba(0, 0, 0, 0.15) 0px 25px 20px -20px;
         position: sticky;
         top: 0;
@@ -21,8 +22,9 @@
     }
 
     .container-main {
-        max-width: 900px;
-        margin: 100px auto;
+        padding: 0 25px;
+        max-width: 950px;
+        margin: 50px auto;
 
         .search-box {
             display: flex;
@@ -53,7 +55,7 @@
 
             .greet {
                 margin: 40px 0;
-                font-size: 46px;
+                font-size: 35px;
                 font-weight: 500;
 
                 span {
@@ -65,7 +67,6 @@
 
             .cards {
                 display: grid;
-                grid-template-columns: repeat(4, 1fr);
                 gap: 30px;
 
                 .card {
@@ -109,6 +110,7 @@
 
                 .top-bar {
                     display: flex;
+                    align-items: center;
                     justify-content: space-between;
                     padding: 10px 0;
                     border-bottom: 1px solid rgba($color: #800000, $alpha: 0.2);
@@ -120,7 +122,7 @@
                     }
 
                     .select-container {
-                        display: flex;
+                        display: none;
                         gap: 10px;
                         align-items: center;
                     }
@@ -196,9 +198,22 @@
 
             .sidebar {
                 gap: 10px;
-                display: flex;
                 flex-direction: column;
                 row-gap: 30px;
+                display: none;
+
+                &.open {
+                    position: absolute;
+                    z-index: 5;
+                    display: flex;
+                    background-color: white;
+                    padding: 30px 35px;
+                    border-radius: 10px;
+                    top: 50%;
+                    left: 50%;
+                    width: 80%;
+                    transform: translate(-50%, -50%);
+                }
 
                 .filter {
                     h2 {
@@ -269,6 +284,26 @@
                         }
                     }
 
+                    .selected-dates {
+                        margin-top: 10px;
+                        margin-top: 10px;
+                        font-size: 14px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        padding-left: 5px;
+
+                        p {
+                            display: flex;
+                            flex-direction: column;
+                            font-weight: 500;
+
+                            input {
+                                font-weight: 400;
+                            }
+                        }
+                    }
+
                     .date-container {
                         display: flex;
                         flex-direction: column;
@@ -280,9 +315,66 @@
                     }
                 }
             }
+
+            .search-btn {
+                display: flex;
+                position: absolute;
+                z-index: 5;
+                background-color: #800000;
+                color: white;
+                width: 80%;
+                justify-content: center;
+                bottom: 10%;
+                left: 50%;
+                width: 80%;
+                transform: translate(-50%, -50%);
+            }
         }
     }
 
+    @media (min-width: 900px) {
+
+        .header {
+            padding: 20px 50px;
+        }
+
+        .container-main {
+            margin: 100px auto;
+
+            .main-result {
+                .sidebar {
+                    display: flex;
+                }
+
+                .search-btn {
+                    display: none;
+                }
+
+                .open-filter {
+                    display: none;
+                }
+
+                .main-welcome {
+                    .top-bar {
+                        .select-container {
+                            display: flex;
+                        }
+                    }
+                }
+
+            }
+
+            .welcome-content {
+                .greet {
+                    font-size: 46px;
+                }
+
+                .cards {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+        }
+    }
 }
 
 .reveal {
@@ -311,7 +403,7 @@ select {
     background: rgba(0, 0, 0, 0.3);
     filter: blur(4px);
     backdrop-filter: blur(3px);
-    z-index: 2;
+    z-index: 5;
 }
 
 .date-popup {
