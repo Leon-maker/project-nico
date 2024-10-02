@@ -93,11 +93,9 @@ const Main = () => {
             }
         }
 
-        let results = testData.filter((card: Card) =>
+        const results = testData.filter((card: Card) =>
             card.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
-
-        results = filterByDate(results);
 
         setSearchResults(sortResults(results, sortOrder));
         setRevealClass('');
@@ -117,33 +115,8 @@ const Main = () => {
         }));
     };
 
-    const filterByDate = (results: Card[]) => {
-        const currentDate = Date.now();
-        console.log("Filtrage par date avec : ", dateFilter);
-
-        return results.filter((card: Card) => {
-            const cardDate = new Date(card.date).getTime();
-
-            switch (dateFilter) {
-                case 'datesPrecises':
-                    if (!startDate || !endDate) {
-                        return false;
-                    }
-                    return cardDate >= new Date(startDate).getTime() && cardDate <= new Date(endDate).getTime();
-                case 'lessThan1Hour':
-                    return (currentDate - cardDate) < 60 * 60 * 1000;
-                case 'lessThan24Hours':
-                    return (currentDate - cardDate) < 24 * 60 * 60 * 1000;
-                case 'lessThan1Week':
-                    return (currentDate - cardDate) < 7 * 24 * 60 * 60 * 1000;
-                case 'lessThan1Month':
-                    return (currentDate - cardDate) < 30 * 24 * 60 * 60 * 1000;
-                case 'lessThan1Year':
-                    return (currentDate - cardDate) < 365 * 24 * 60 * 60 * 1000;
-                default:
-                    return true;
-            }
-        });
+    const handleApply = () => {
+        setSidebarOpen(false);
     };
 
     return (
@@ -275,7 +248,7 @@ const Main = () => {
                                 )}
                             </div>
                         </div>
-                        {(sidebarOpen) && (<button className="search-btn button-primary">Appliquer</button>)}
+                        {(sidebarOpen) && (<button className="search-btn button-primary" onClick={handleApply}>Appliquer</button>)}
                         <div className={`main-welcome`}>
                             <div className="top-bar">
                                 <p className='result-number'>Résultats ({searchResults.length})</p>
