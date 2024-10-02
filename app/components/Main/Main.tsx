@@ -122,12 +122,10 @@ const Main = () => {
     return (
         <div className="main">
             <div className="header">
-                <p className="logo">JurisPrudence</p>
-                <button className="button-primary">Deconnexion</button>
-            </div>
-            <div className="container-main">
-                {sidebarOpen && <div className={`overlay`} onClick={toggleSidebar}></div>}
-
+                <div className="top-container">
+                    <p className="logo">JurisPrudence</p>
+                    <button className="button-primary account">Deconnexion</button>
+                </div>
                 <form className="search-box" onSubmit={handleSearch}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19.035" height="19.039" viewBox="0 0 19.035 19.039">
                         <g id="_x32_-Magnifying_Glass" transform="translate(-7.129 -7.125)">
@@ -144,6 +142,10 @@ const Main = () => {
                         <Image src={assets.send_icon} alt="Envoyer" />
                     </button>
                 </form>
+                <button className="button-primary account">Deconnexion</button>
+            </div>
+            <div className="container-main">
+                {sidebarOpen && <div className={`overlay`} onClick={toggleSidebar}></div>}
 
                 {welcomeDisplayed && searchResults.length === 0 && (
                     <div className="welcome-content">
