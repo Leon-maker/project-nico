@@ -35,6 +35,10 @@ const Main = () => {
     });
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
+    const handleLogout = () => {
+        console.log("Deconnexion");
+    };
+
     const sortResults = (results: Card[], order: string): Card[] => {
         return results.sort((a, b) => {
             const dateA = new Date(a.date).getTime();
@@ -109,6 +113,7 @@ const Main = () => {
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
+        console.log(`Document cliqué : ${name}, checked: ${checked}`);
         setDocumentTypes((prev) => ({
             ...prev,
             [name]: checked,
@@ -124,7 +129,7 @@ const Main = () => {
             <div className="header">
                 <div className="top-container">
                     <p className="logo">JurisPrudence</p>
-                    <button className="button-primary account">Deconnexion</button>
+                    <button className="button-primary account" onClick={handleLogout}>Deconnexion</button>
                 </div>
                 <form className="search-box" onSubmit={handleSearch}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19.035" height="19.039" viewBox="0 0 19.035 19.039">
@@ -142,7 +147,7 @@ const Main = () => {
                         <Image src={assets.send_icon} alt="Envoyer" />
                     </button>
                 </form>
-                <button className="button-primary account">Deconnexion</button>
+                <button className="button-primary account" onClick={handleLogout}>Deconnexion</button>
             </div>
             <div className="container-main">
                 {sidebarOpen && <div className={`overlay`} onClick={toggleSidebar}></div>}
@@ -167,7 +172,7 @@ const Main = () => {
                                 <p>Différence entre responsabilité civile et pénale ?</p>
                             </div>
                             <div className="card">
-                                <Image src={assets.code_icon} alt="" />
+                                <Image src={assets.question_icon} alt="" />
                                 <p>Quels droits pour un salarié licencié ?</p>
                             </div>
                         </div>
